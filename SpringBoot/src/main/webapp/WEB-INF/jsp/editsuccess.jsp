@@ -7,7 +7,10 @@
 <title>Updated successfully</title>
 </head>
 <body>
-<h1>Updated successfully</h1>
-<a href="/viewcart">view cart</a>
+<center>
+	<h1>Updated successfully</h1>
+	<br/>
+	<a href="/shop">Add more products</a>
+</center>
 </body>
 </html>

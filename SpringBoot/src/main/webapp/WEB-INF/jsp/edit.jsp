@@ -13,32 +13,32 @@
 	font-style: italic;
 }
 </style>
-<form:form method="put" action="product" modelAttribute="inventory">
+<form:form method="POST" action="products" modelAttribute="product">
 	<h2 class="jumbotron" height=100 align="center">Edit Product</h2>
 	<div align="center">
 		<table>
 			<tr>
 				<form:hidden path="id"></form:hidden>
 				<td>Product Name * :</td>
-				<td><form:input path="name" id="name" size="35" maxlength="30" />
+				<td><form:input path="name" id="name" value="${product.name}" size="35" maxlength="30" />
 					<form:errors path="name" cssClass="error" /></td>
 			</tr>
 
 			<tr>
 				<td>Product Description :</td>
-				<td><form:input path="description" id="description" size="35"
+				<td><form:input path="description" id="description" value="${product.description}" size="35"
 						maxlength="30" /> <form:errors path="description" cssClass="error" />
 				</td>
 			</tr>
 			<tr>
 				<td>Quantity *:</td>
-				<td><form:input path="quantity" id="quantity" size="6"
+				<td><form:input path="quantity" id="quantity" value="${product.quantity}" size="6"
 						maxlength="5" /> <form:errors path="quantity" cssClass="error" />
 				</td>
 			</tr>
 			<tr>
 				<td>Price *:</td>
-				<td><form:input path="price" id="price" size="8" maxlength="6" />
+				<td><form:input path="price" id="price" size="8" value="${product.price}" maxlength="6" />
 					<form:errors path="price" cssClass="error" /></td>
 			</tr>
 			<%-- <tr>

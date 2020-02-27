@@ -1,7 +1,6 @@
 package com.mak.controller;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +12,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,10 +21,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mak.dao.InventoryDao;
 import com.mak.model.Product;
 import com.mak.model.Search;
-import com.mak.model.Users;
 import com.mak.service.ProductServiceIntf;
 import com.mak.service.UserService;
 
+/**
+ * @author manikandan.dhana
+ *
+ */
 @RestController
 public class CustomerController {
 
@@ -77,33 +77,32 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value = "/product")
-	public ModelAndView updateProduct(@ModelAttribute("inventory") Product inventory,Map<String, Object> map) {
-		map.put("productList", productService.listProducts());
-		return new ModelAndView("addInventory");
+	public ModelAndView updateProduct(@ModelAttribute("product") Product product, HttpServletRequest request) {
+		int id = Integer.parseInt(request.getParameter("id"));
+		product = productService.getById(id);
+		return new ModelAndView("edit", "product", product);
 	}
 
 	@RequestMapping(value = "/product", method = RequestMethod.POST)
 	public ModelAndView SavePage(@Valid @ModelAttribute("inventory") Product inventory, Map<String, Object> map,
 			BindingResult theBindingResult) {
-		
-		if (theBindingResult.hasErrors()) {
+		logger.info("SavePage has Errors===>"+theBindingResult.hasErrors());
+		/*if (theBindingResult.hasErrors()) {
 			map.put("productList", productService.listProducts());
 			return new ModelAndView("addInventory").addObject("message", "Please fill the mandatory fields");
-		} else {
+		} else {*/
 			logger.info("Inserting the Product Details");
 			productService.addProduct(inventory);
 			map.put("productList", productService.listProducts());
 			return new ModelAndView("addInventory").addObject("message", "Product details are successfully added");
-		}
+		//}
 		
 	}
 
-	@RequestMapping(value = "/product", method = RequestMethod.PUT)
+	@RequestMapping(value = "/products", method = RequestMethod.POST)
 	public ModelAndView editCart(HttpServletRequest request, @ModelAttribute("product") Product product,Map<String, Object> map) {
-		int id = Integer.parseInt(request.getParameter("id"));
-		Product editedProduct = productService.getById(id);
-		map.put("productList", productService.listProducts());
-		return new ModelAndView("edit", "editedProduct", editedProduct);
+		productService.addProduct(product);
+		return new ModelAndView("editsuccess");
 	}
 
 

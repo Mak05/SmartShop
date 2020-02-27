@@ -6,7 +6,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages="com.mak.configuration")
-//@EnableAutoConfiguration
 public class SpringbootapplicationdemoApplication {
 
 	public static void main(String[] args) {
